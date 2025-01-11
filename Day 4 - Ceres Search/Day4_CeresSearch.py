@@ -19,7 +19,6 @@ def wordSearch(grid, word, directions, searchType):
         # For search type "X-Mas Puzzle" store coordinates of "A" in successfully found words. 
         if word == "":
             nonlocal centerX, centerY
-            
         elif word[0] == 'A':
             centerX, centerY = row, col
         
@@ -29,7 +28,7 @@ def wordSearch(grid, word, directions, searchType):
             coordinates.append([centerX, centerY])
             return True
         
-        # Out of Bounds: Return to search in a different direction
+        # Incorrect Letter: Return to search in a different direction
         elif row < 0 or row >= rows or col < 0 or col >= cols:
             print("-----OUT OF BOUNDS-----> row,col: ", row, ", ",col)
             return False
@@ -46,24 +45,17 @@ def wordSearch(grid, word, directions, searchType):
         return checkDirection(newRow, newCol, word[1:], dRow, dCol)
 
     for row in range(rows):
-        
         for col in range(cols):
-            
             for dRow in directions:
-                
                 for dCol in directions:
-                    
                     if dRow == 0 and dCol == 0:
                         continue  # Skip - Not Moving
-  
                     if checkDirection(row, col, word, dRow, dCol):
                         countWordsFound += 1
 
-    
     if searchType == "Puzzle":     
         # Find unique "A" coodinates and count how many times they appear 
         uniqueCoords, counts = np.unique(coordinates, axis=0, return_counts=True)
-
         # If any "A" coordinates are the same, they have crossed to make the "X-Mas Puzzle"
         duplicateCoords = np.count_nonzero(counts > 1)
         
