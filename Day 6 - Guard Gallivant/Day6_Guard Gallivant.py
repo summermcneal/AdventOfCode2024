@@ -7,9 +7,7 @@ def createArrayFromText(filename):
         lines = f.readlines()
 
     for line in lines:
-        
         values = [val for val in line.rstrip('\n')]
-              
         if line[len(line) - 1]:
             data.append(values)
 
@@ -23,7 +21,6 @@ def findStartingPosition(grid, value):
         for col in range(cols):
                 if grid[row][col] == value:
                     return row, col
-                    
     return None
     
 def guardMap(grid):
@@ -37,62 +34,49 @@ def guardMap(grid):
         if direction == 'up':
             while row > 0:    
                 row -= 1
-                
                 if row <= 0 and grid[row][col] == '.':
                     predictedMap[row][col] = 'x'
                     print('No Obstacles! Exiting Map TOP')
-                    
                 elif grid[row][col] == '.':
                     predictedMap[row][col] = 'x'
-                
                 elif grid[row][col] == '#':
                     return moveGuard(row + 1, col, 'right')
 
         if direction == 'right':
             while col <= cols:    
                 col += 1
-                
                 if col >= cols:
                     print('No Obstacles! Exiting Map RIGHT')
-                    
                 elif grid[row][col] == '.':
                     predictedMap[row][col] = 'x'
-                
                 elif grid[row][col] == '#':
                     return moveGuard(row, col - 1, 'down')
  
         if direction == 'down':
             while row < rows:    
                 row += 1
-               
                 if row >= rows:
                     print('No Obstacles! Exiting Map DOWN')
-                    
                 elif grid[row][col] == '.':
                     predictedMap[row][col] = 'x'
-                
                 elif grid[row][col] == '#':
                     return moveGuard(row - 1, col, 'left')
                 
         if direction == 'left':
             while col > 0:    
                 col -= 1
-                
                 if col <= 0 and grid[row][col] == '.':
                     predictedMap[row][col] = 'x'
                     print('No Obstacles! Exiting Map LEFT')
-                    
                 elif grid[row][col] == '.':
                     predictedMap[row][col] = 'x'
-                
                 elif grid[row][col] == '#':
                     return moveGuard(row, col + 1, 'up')
     
     # PART 1: Predict the guard's (^) route, turning right when encountering an obstruction (#)
     stRow, stCol = findStartingPosition(grid, '^')
     # Mark starting postion with an 'x' since it is included in positions
-    predictedMap[stRow][stCol] = 'x'
-    
+    predictedMap[stRow][stCol] = 'x'  
     # Move Guard (^) up, method continues moving Guard until it exits the map
     moveGuard(stRow,stCol,'up')
     
@@ -101,9 +85,7 @@ def guardMap(grid):
 
     # PART 2: Find the total amount of obstacles that can be placed to keep the Guard in a loop
     for row in range(rows):
-    
         for col in range(cols):
-        
             if grid[row][col] != '#':
                 # Try placing an obstacle in every cell of the map
                 try:
@@ -113,7 +95,6 @@ def guardMap(grid):
                 except Exception as e:
                     print("An error occurred:", e)
                     errorCount += 1
-                
                 # Change the obstacle back into a '.'
                 grid[row][col] = '.'
                     
